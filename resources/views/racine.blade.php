@@ -19,15 +19,45 @@
     <link rel="stylesheet" href="{{ url('/assets/vendor/fortawesome/fontawesome-free/css/all.min.css')}}"  type="text/css">
     <link rel="stylesheet" href="{{ url('/css/argon.css')}}"  type="text/css">
 
+
+    <link rel="stylesheet" href="{{ url('/otika/assets/bundles/owlcarousel2/dist/assets/owl.carousel.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/otika/assets/bundles/owlcarousel2/dist/assets/owl.theme.default.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/otika/assets/bundles/summernote/summernote-bs4.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/otika/assets/css/style.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/otika/assets/css/components.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url('/otika/assets/css/custom.css')}}" type="text/css">
+
     <link href="{{ url('/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <style>
 
+
+            ::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+            ::-webkit-scrollbar
+        {
+            width: 8px;
+            background-color: #F5F5F5;
+        }
+
+            ::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #f7941e ;
+        }
+    </style>
     @yield('style')
 
 
 </head>
 
-<body>
+<body id=style-1>
 
     <div class="preloader">
         <div class="lds-ripple">
@@ -76,14 +106,21 @@
                 console.log("cp");
             }
         }
+
     </script>
 
 
 
     <script src="{{ url('/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url('/otika/assets/js/app.min.js') }}"></script>
+    <script src="{{ url('/otika/assets/js/scripts.js') }}"></script>
+
+    <script src="{{ url('/otika/assets/bundles/datatables/datatables.min.js') }}"></script>
+    <script src="{{ url('/otika/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url('/otika/assets/bundles/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ url('/otika/assets/js/page/datatables.js') }}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ url('/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-    <script src="{{ url('/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('/js/app-style-switcher.js') }}" ></script>
     <!--Wave Effects -->
     <!--Menu sidebar -->

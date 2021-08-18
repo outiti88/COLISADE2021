@@ -35,7 +35,7 @@ class ReceptionController extends Controller
     {
         $clients = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['ecom']);
-        })->get();
+        })->orderBy('name')->get();
         $nouveau =  User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['nouveau']);
         })->where('deleted_at', NULL)->count();
@@ -97,7 +97,7 @@ class ReceptionController extends Controller
 
         $clients = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['ecom']);
-        })->get();
+        })->orderBy('name')->get();
         $receptions = DB::table('receptions')->orderBy('created_at', 'DESC');
         $users = [];
         $produits = null;

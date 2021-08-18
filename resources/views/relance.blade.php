@@ -187,7 +187,7 @@ Relances
                                         </td>
 
                                     </tr>
-                                    <div class="container my-4">    
+                                    <div class="container my-4">
                                         <div class="modal fade" id="RelanceVIP{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -211,7 +211,7 @@ Relances
                                                                                 <option>Refusée</option>
                                                                                 <option>Annulée</option>
 
-                                                              
+
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -230,7 +230,7 @@ Relances
                                                                     <div class="form-group">
                                                                         <div class="modal-footer d-flex justify-content-center">
                                                                             <button class="btn btn-warning">Relancer</button>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -247,7 +247,7 @@ Relances
                                                                   </div>
                                                                   @endif
                                                             </div>
-                                                
+
                                                           </div>
                                                         </div>
                                         </div>
@@ -256,15 +256,15 @@ Relances
                                     <tr>
                                         <td colspan="10" style="text-align: center">Aucune commande enregistrée!</td>
                                     </tr>
-                                    
+
                                     @endforelse
-                                 
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="tab-pane fade" id="relance1" role="tabpanel" aria-labelledby="relance1-tab">
                     <div class="card">
                         <div class="card-body">
@@ -303,7 +303,7 @@ Relances
                                         </td>
 
                                     </tr>
-                                    <div class="container my-4">    
+                                    <div class="container my-4">
                                         <div class="modal fade" id="Relance1{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -326,7 +326,7 @@ Relances
                                                                                 <option>Injoignable</option>
                                                                                 <option>Refusée</option>
                                                                                 <option>Annulée</option>
-                                                              
+
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -345,7 +345,7 @@ Relances
                                                                     <div class="form-group">
                                                                         <div class="modal-footer d-flex justify-content-center">
                                                                             <button class="btn btn-warning">Relancer</button>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -362,7 +362,7 @@ Relances
                                                                   </div>
                                                                   @endif
                                                             </div>
-                                                
+
                                                           </div>
                                                         </div>
                                         </div>
@@ -371,9 +371,9 @@ Relances
                                     <tr>
                                         <td colspan="10" style="text-align: center">Aucune commande enregistrée!</td>
                                     </tr>
-                                    
+
                                     @endforelse
-                                 
+
                                 </tbody>
                             </table>
                         </div>
@@ -418,7 +418,7 @@ Relances
                                         </td>
 
                                     </tr>
-                                    <div class="container my-4">    
+                                    <div class="container my-4">
                                         <div class="modal fade" id="Relance2{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -441,7 +441,7 @@ Relances
                                                                                 <option>Injoignable</option>
                                                                                 <option>Refusée</option>
                                                                                 <option>Annulée</option>
-                                                              
+
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -460,7 +460,7 @@ Relances
                                                                     <div class="form-group">
                                                                         <div class="modal-footer d-flex justify-content-center">
                                                                             <button class="btn btn-warning">Relancer</button>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -477,7 +477,7 @@ Relances
                                                                   </div>
                                                                   @endif
                                                             </div>
-                                                
+
                                                           </div>
                                                         </div>
                                         </div>
@@ -486,9 +486,9 @@ Relances
                                     <tr>
                                         <td colspan="10" style="text-align: center">Aucune commande enregistrée!</td>
                                     </tr>
-                                    
+
                                     @endforelse
-                                 
+
                                 </tbody>
                             </table>
                         </div>
@@ -532,7 +532,7 @@ Relances
                                         </td>
 
                                     </tr>
-                                    <div class="container my-4">    
+                                    <div class="container my-4">
                                         <div class="modal fade" id="Relance3{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -573,7 +573,7 @@ Relances
                                                                     <div class="form-group">
                                                                         <div class="modal-footer d-flex justify-content-center">
                                                                             <button class="btn btn-warning">Relancer</button>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -590,7 +590,7 @@ Relances
                                                                   </div>
                                                                   @endif
                                                             </div>
-                                                
+
                                                           </div>
                                                         </div>
                                         </div>
@@ -599,9 +599,9 @@ Relances
                                     <tr>
                                         <td colspan="10" style="text-align: center">Aucune commande enregistrée!</td>
                                     </tr>
-                                    
+
                                     @endforelse
-                                 
+
                                 </tbody>
                             </table>
                         </div>

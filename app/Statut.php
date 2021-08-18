@@ -16,4 +16,7 @@ class Statut extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function commande(){
+        return $this->belongsTo('App\Commandes');
+    }
 }

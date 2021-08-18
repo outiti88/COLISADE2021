@@ -7,6 +7,9 @@
 
 
 @section('style')
+
+<link rel="stylesheet" href="{{ url('/otika/assets/bundles/select2/dist/css/select2.min.css')}}" type="text/css">
+
     <style>
     .orangeBadge{
         background-color: #FF5722;
@@ -244,45 +247,171 @@
           </div>
         @endif
         <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                  <h4 >Statut des commandes :</h4>
+                  <div class="card-header-action">
+                    <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i
+                        class="fas fa-minus"></i></a>
+                  </div>
+                </div>
+                <div class="collapse show" id="mycard-collapse">
+                  <div class="card-body">
+                    <div class="row" style="display: flex;align-items: center;align-content: stretch;flex-wrap: wrap;justify-content: space-evenly">
 
+                        @cannot('livreur')
+                            <a onmouseover="showStatusQte('envoyee')"  onmouseleave="showStatus('envoyee')"  href="/commandes/filter?statut=envoyée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-warning">
+                                <span id="envoyee">Envoyée</span>
+                                <span id="envoyeeQte" style="display:none;" >
+                                    @if (array_key_exists("envoyée",$statutStat))
+                                        {{$statutStat['envoyée']}}
+                                    @else
+                                        0
+                                    @endif
+                                    Commandes
+                                </span>
+                            </a>
+                            <a onmouseover="showStatusQte('Recue')" onmouseleave="showStatus('Recue')" href="/commandes/filter?statut=Reçue" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-secondary">
+                                <span id="Recue">Reçue</span>
+                                <span id="RecueQte" style="display:none;" >
+                                    @if (array_key_exists("Reçue",$statutStat))
+                                        {{$statutStat['Reçue']}}
+                                    @else
+                                        0
+                                    @endif
+                                    Commandes
+                                </span>
+                            </a>
+                        @endcannot
+
+
+                        <a onmouseover="showStatusQte('Expidiee')" onmouseleave="showStatus('Expidiee')" href="/commandes/filter?statut=Expidiée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-primary">
+                            <span id="Expidiee">Expediée</span>
+                            <span id="ExpidieeQte" style="display:none;" >
+                                @if (array_key_exists("Expidiée",$statutStat))
+                                    {{$statutStat['Expidiée']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        <a onmouseover="showStatusQte('en')" onmouseleave="showStatus('en')" href="/commandes/filter?statut=en cours" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-info">
+                            <span id="en">En cours</span>
+                            <span id="enQte" style="display:none;" >
+                                @if (array_key_exists("En cours",$statutStat))
+                                    {{$statutStat['En cours']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        @can('livreur')
+                        <a onmouseover="showStatusQte('Relancee')" onmouseleave="showStatus('Relancee')" href="/commandes/filter?statut=Relancée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge relanceBadge">
+                            <span id="Relancee">Relancée</span>
+                            <span id="RelanceeQte" style="display:none;" >
+                                @if (array_key_exists("Relancée",$statutStat))
+                                    {{$statutStat['Relancée']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        @endcan
+                        <a onmouseover="showStatusQte('Livre')" onmouseleave="showStatus('Livre')" href="/commandes/filter?statut=Livré" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-success">
+                            <span id="Livre">Livrée</span>
+                            <span id="LivreQte" style="display:none;" >
+                                @if (array_key_exists("Livré",$statutStat))
+                                    {{$statutStat['Livré']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        <a onmouseover="showStatusQte('Refusee')" onmouseleave="showStatus('Refusee')" href="/commandes/filter?statut=Refusée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-danger">
+                            <span id="Refusee">Refusée</span>
+                            <span id="RefuseeQte" style="display:none;" >
+                                @if (array_key_exists("Refusée",$statutStat))
+                                    {{$statutStat['Refusée']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        <a onmouseover="showStatusQte('Pas')" onmouseleave="showStatus('Pas')" href="/commandes/filter?statut=Pas de Réponse" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge violetBadge">
+                            <span id="Pas">Pas de réponse</span>
+                            <span id="PasQte" style="display:none;" >
+                                @if (array_key_exists("Pas de Réponse",$statutStat))
+                                    {{$statutStat['Pas de Réponse']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+                        <a onmouseover="showStatusQte('Reporte')" onmouseleave="showStatus('Reporte')" href="/commandes/filter?statut=Reporté" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge orangeBadge">
+                            <span id="Reporte">Reportée</span>
+                            <span id="ReporteQte" style="display:none;" >
+                                @if (array_key_exists("Reporté",$statutStat))
+                                    {{$statutStat['Reporté']}}
+                                @else
+                                    0
+                                @endif
+                                Commandes
+                            </span>
+                        </a>
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+            @if ($checkBox==1)
+            <div class="card">
+                <div class="card-header">
+                  <h4 >Actions : </h4>
+                  <div class="card-header-action">
+                    <a data-collapse="#mycard-action" class="btn btn-icon btn-info" href="#"><i
+                        class="fas fa-minus"></i></a>
+                  </div>
+                </div>
+                <div class="collapse show" id="mycard-action">
+                  <div class="card-body">
+                        @can('manage-users')
+                            @if (request()->get('statut') != null)
+                                @if (request()->get('statut') == 'envoyée')
+                                    <button  onclick="recevoir()" class="btn btn-danger text-white"><i class="fas fa-check-circle"></i> Recevoir</button>
+                                @endif
+                                @if (request()->get('statut') == 'Reçue')
+                                    <button style="margin:15px" onclick="expedier()" class="btn btn-danger text-white"><i class="fas fa-truck"></i> Expédier</button>
+                                @endif
+                                <a style="margin:15px" data-toggle="modal" data-target="#modalQuickStatusChange"  class="btn btn-danger text-white"><i class="fas fa-edit"></i> Changer le statut</a>
+                            @endif
+                        @endcan
+                            @if (request()->get('livreur') != null)
+                        @can('manage-users')
+                            <button  style="margin:15px" onclick="submitForm1()" class="btn btn-danger"><i class="mdi mdi-note-text"></i> Bon de Commande</button>
+                        @endcan
+                            @endif
+
+                        <button style="margin:15px"  onclick="submitForm2()" class="btn btn-danger text-white"><i class="fas fa-print"></i> Ticket de Commande</button>
+                  </div>
+                </div>
+              </div>
+              @endif
             <div class="card">
 
                 <div class="card-body" style="padding-bottom: 0;">
                     <h6 class="card-subtitle">Nombre total des commandes : <code>{{$total}} Commandes</code> .</h6>
-                    <h4 class="card-title" style="margin-bottom: 0;margin-top: 1rem">Statut des commandes : </h4>
-                    <div class="row" style="display: flex;align-items: center;align-content: stretch;flex-wrap: wrap;justify-content: space-evenly">
-
-                        @cannot('livreur')
-                            <a href="/commandes/filter?statut=envoyée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-warning">
-                                <span >Envoyée</span>
-                            </a>
-                            <a href="/commandes/filter?statut=Reçue" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-secondary">
-                                <span >Reçue</span>
-                            </a>
-                        @endcannot
-                        <a href="/commandes/filter?statut=Expidiée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-primary">
-                            <span >Expediée</span>
-                        </a>
-                        <a href="/commandes/filter?statut=en cours" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-info">
-                            <span >En cours</span>
-                        </a>
-                        <a href="/commandes/filter?statut=Livré" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-success">
-                            <span >Livrée</span>
-                        </a>
-                        <a href="/commandes/filter?statut=Refusée" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge badge-danger">
-                            <span >Refusée</span>
-                        </a>
-                        <a href="/commandes/filter?statut=Pas de Réponse" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge violetBadge">
-                            <span >Pas de réponse</span>
-                        </a>
-                        <a href="/commandes/filter?statut=Reporté" style="display:block ; margin: 0.5rem; font-size: 0.8em;padding: 1rem !important;color: white; cursor:pointer;margin-top:0.5rem" class="badge orangeBadge">
-                            <span >Reportée</span>
-                        </a>
-
-                    </div>
                     <input class="form-control" id="myInput" type="text" placeholder="Rechercher...">
                 </div>
-
+                <div class="wrapper1">
+                    <div class="div1">
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <form id="commandes-form" method="GET">
 
@@ -295,8 +424,13 @@
                     data-filter-control="true"
                     data-click-to-select="true"
                     data-toolbar="#toolbar"
-                    class="table-responsive"  data-click-to-select="true" class="table table-hover" style="font-size: 0.72em;">
-                        <thead>
+                    data-click-to-select="true" class="table table-hover table-responsive" style="font-size: 0.70em;
+                    text-align: center;
+                    zoom: 90%;">
+                        <thead style="position: sticky;
+                        top: 0;
+                        background-color: white;
+                        z-index: 900;">
                             <tr>
 
                                     @if ($checkBox==1)
@@ -365,7 +499,13 @@
                                         </th>
                                         <td>{{$commande->nom}}</td>
                                         <td>{{$commande->telephone}}</td>
-                                        <td>{{$commande->ville}}</td>
+                                        <td>@if (strpos($commande->ville, '(Hors Zone)') !== false)
+                                            {{substr($commande->ville, 0, -12)}} <br>
+                                            <span style="color: white" class="badge badge-pill badge-danger" style="font-size: 1.25em">(Hors Zone)</span>
+                                        @else
+                                            {{$commande->ville}}
+                                        @endif
+                                        </td>
                                         @if ($commande->montant > 0)
                                         <td>{{$commande->montant}} DH</td>
                                         @else
@@ -374,7 +514,7 @@
                                         @cannot('livreur')
                                         <td>{{$commande->prix}} DH</td>
                                         @endcannot
-                                        <td>{{$commande->created_at}}</td>
+                                        <td>{{$commande->updated_at}}</td>
                                         <td>
                                             <a  style="color: white; cursor:pointer"
                                                 @switch($commande->statut)
@@ -469,10 +609,10 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group" style="display: none" id="prevu{{$commande->id}}">
+                                                                        <div class="form-group" style="display: none" id="prevu{{$commande->id}}" >
                                                                             <label for="datePrevu{{$commande->id}}" class="col-sm-12">Date Prévue :</label>
                                                                             <div class="col-sm-12">
-                                                                            <input class="form-control"  type="date" id="datePrevu{{$commande->id}}">
+                                                                            <input class="form-control"  type="date" id="datePrevu{{$commande->id}}" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -545,32 +685,6 @@
                                     @endforelse
 
 
-                            @if ($checkBox==1)
-                                <div class="card-body" style="padding-bottom: 0;padding-top: 0;">
-                                    <h4 class="card-title" style="margin-bottom: 0;margin-top: 1rem">Actions : </h4>
-                                    <div class="row" style="display: flex;align-items: center;align-content: stretch;flex-wrap: wrap;">
-                                        @if (request()->get('livreur') != null)
-                                        @can('manage-users')
-                                        <button  style="margin:15px" onclick="submitForm1()" class="btn btn-primary">Bon de Commande</button>
-                                        @endcan
-                                        @endif
-                                        @can('manage-users')
-                                            @if (request()->get('statut') != null)
-                                                <a style="margin:15px" data-toggle="modal" data-target="#modalQuickStatusChange"  class="btn btn-danger text-white">Changer le statut</a>
-                                                @if (request()->get('statut') == 'envoyée')
-                                                    <button  onclick="recevoir()" class="btn btn-danger text-white">Recevoir</button>
-                                                @endif
-                                                @if (request()->get('statut') == 'Reçue')
-                                                    <button style="margin:15px" onclick="expedier()" class="btn btn-danger text-white">Expédier</button>
-                                                @endif
-                                            @endif
-                                        @endcan
-                                    <button style="margin:15px"  onclick="submitForm2()" class="btn btn-danger text-white">Ticket de Commande</button>
-                                    </div>
-
-                                </div>
-
-                            @endif
                             </tbody>
 
 
@@ -653,6 +767,7 @@
                             <form class="form-horizontal form-material" method="GET" action="{{route('commande.filter')}}">
                                 @csrf
                                 @can('manage-users')
+
                                 <div class="form-group row">
                                     <label for="mySelect" class="col-sm-4">Fournisseur :</label>
                                     <div class="col-sm-8">
@@ -699,7 +814,7 @@
                                     <label for="produit" class="col-sm-4">Produit :</label>
                                     <div class="col-md-8">
                                         <select name="produit" id="produit" class="form-control form-control-line" >
-                                            <option value="" disabled selected>Produit</option>
+                                            <option value="" selected>Produit</option>
 
                                                 @foreach ($produits as $produit)
                                                 <option value="{{$produit->id}}" class="rounded-circle product product{{$produit->user_id}}" @if(request()->get('produit') == $produit->id) selected @endif>
@@ -755,15 +870,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="example-date-input" class="col-4 col-form-label">Date Min</label>
+                                    <label for="dateMin" class="col-4 col-form-label">Date Min</label>
                                     <div class="col-8">
-                                      <input class="form-control" name="dateMin" type="date" value="{{request()->get('dateMin')}}" id="example-date-input">
+                                      <input class="form-control" name="dateMin" type="date" value="{{request()->get('dateMin')}}" id="dateMin">
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                    <label for="example-date-input" class="col-4 col-form-label">Date Max</label>
+                                    <label for="dateMax" class="col-4 col-form-label">Date Max</label>
                                     <div class="col-8">
-                                      <input class="form-control" name="dateMax"  type="date" value="{{request()->get('dateMax')}}" id="example-date-input">
+                                      <input class="form-control" name="dateMax"  type="date" value="{{request()->get('dateMax')}}" id="dateMax">
                                     </div>
                                   </div>
                                   @cannot('livreur')
@@ -790,13 +905,13 @@
                                 </div>
                                 @endcannot
                                 <div class="form-group row">
-                                    <label for="example-date-input" class="col-3 col-form-label">Montant Min</label>
+                                    <label for="example-date-min" class="col-3 col-form-label">Montant Min</label>
                                     <div class="col-3">
-                                      <input class="form-control" name="prixMin" type="number" value="0" id="example-date-input">
+                                      <input class="form-control" name="prixMin" type="number" value="0" id="example-date-min">
                                     </div>
-                                    <label for="example-date-input" class="col-3 col-form-label">Montant Max</label>
+                                    <label for="example-date-max" class="col-3 col-form-label">Montant Max</label>
                                     <div class="col-3">
-                                      <input class="form-control" type="number" name="prixMax" value="0" id="example-date-input">
+                                      <input class="form-control" type="number" name="prixMax" value="0" id="example-date-max">
                                     </div>
                                   </div>
 
@@ -858,6 +973,17 @@
 
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label>Select2 Multiple</label>
+                                    <select class="form-control select2" multiple="">
+                                      <option>Option 1</option>
+                                      <option>Option 2</option>
+                                      <option>Option 3</option>
+                                      <option>Option 4</option>
+                                      <option>Option 5</option>
+                                      <option>Option 6</option>
+                                    </select>
+                                  </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Nom et Prénom du destinataire :</label>
                                     <div class="col-md-12">
@@ -1280,6 +1406,13 @@
 @endsection
 
 @section('javascript')
+
+
+<script src="{{url('/otika/assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{url('/otika/assets/js/page/forms-advanced-forms.js')}}"></script>
+
+
+
     @if ($errors->any())
         <script type="text/javascript">
             $(window).on('load',function(){
@@ -1319,6 +1452,20 @@
 </script>
 
 <script>
+
+function showStatusQte(id){
+    el =  document.getElementById(id);
+    el2 =  document.getElementById(id+'Qte');
+    el.style.display = "none";
+    el2.style.display = "block";
+}
+
+function showStatus(id){
+    el =  document.getElementById(id);
+    el2 =  document.getElementById(id+'Qte');
+    el.style.display = "block";
+    el2.style.display = "none";
+}
 
 function fournisseurSelected() {
     var x = document.getElementById("mySelect").value;

@@ -713,9 +713,13 @@ N: {{$commande->numero}}
                                                     "badge badge-pill badge-danger"
                                             @endswitch
                                         >
-                                            <span style="font-size: 1.25em">{{$statut->name}}</span>
+                                        <span style="font-size: 1.25em">{{$statut->name}}</span>
+
                                         </a>
                                     </label>
+                                    @if ($statut->name == "Reporté" && $statut->postponed_at != null)
+                                             <span class="badge">Pour le : {{\Carbon\Carbon::parse($statut->postponed_at)->format('j , m, Y')}}</span>
+                                        @endif
                                     </div>
                                     <div class="col-md-4">
                                         <p>{{$statut->created_at}}</p>

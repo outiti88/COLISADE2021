@@ -113,7 +113,7 @@
                 @endif
                 </span></a></li>
                 @endcan
-                @can('client-admin')
+                @can('delete-commande')
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('reclamation.index')}}" aria-expanded="false"><i class="fab fa-buffer"></i>
                         <span class="hide-menu">Reclamations
@@ -123,7 +123,6 @@
                         </span>
                     </a>
                 </li>
-
                 @endcan
             </ul>
 

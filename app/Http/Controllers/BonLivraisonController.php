@@ -8,6 +8,7 @@ use App\Produit;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -209,7 +210,7 @@ class BonLivraisonController extends Controller
             return redirect()->route('bonlivraison.index');
         }
         //dd($bonLivraison->id);
-        $pdf = \App::make('dompdf.wrapper');
+        $pdf = App::make('dompdf.wrapper');
         $style = '
         <!doctype html>
         <html lang="en">
@@ -224,7 +225,7 @@ class BonLivraisonController extends Controller
 
                 body{
                     margin: 0px;
-                    background-image: url("https://i.postimg.cc/fbk19tTg/Bon-de-livraison-PNG.png");
+                    background-image: url("https://colisade.ma/images/BonLivraisonColisade.png");
                     width: 790px;
                     height: auto;
                     background-position: center;
@@ -352,15 +353,57 @@ class BonLivraisonController extends Controller
                 $users[] =  User::withTrashed()->find($commande->user_id);
         }
         //$commandes = Commande::all()->paginate(3) ;
+        $statuts = [];
+        $statutStat = [];
+
+        if(!Gate::denies('manage-users')){
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('deleted_at', NULL)
+                ->where(function ($q) {
+                   $q->whereDate('updated_at', '>=', now()->subMonth())
+                       ->orWhereNotIn('commandes.statut', ['livré', 'Retour en stock', 'Retour']);
+               })
+                ->groupBy('statut')
+                ->get();
+        }
+        else if(!Gate::denies('livreur')){
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('deleted_at', NULL)
+                ->where('livreur', Auth::user()->id)
+                ->whereNotIn('commandes.statut', ['envoyée', 'Ramassée', 'Recue'])
+                ->groupBy('statut')
+                ->get();
+        }else{
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('user_id', Auth::user()->id)
+                ->where('deleted_at', NULL)
+                ->where(function ($q) {
+                   $q->whereDate('updated_at', '>=', now()->subMonth())
+                       ->orWhereNotIn('commandes.statut', ['livré', 'Retour en stock', 'Retour']);
+               })
+                ->groupBy('statut')
+                ->get();
+        }
+
+        foreach ($statuts as $statut){
+            $statutStat[$statut->statut] = $statut->total;
+        }
+
         return view('commande.colis', [
-            'nouveau' => $nouveau, 'commandes' => $commandes,
+            'commandes' => $commandes,
+            'nouveau' => $nouveau,
             'total' => $total,
             'users' => $users,
             'clients' => $clients,
             'produits' => $produits,
             'livreurs' => $livreurs,
-            'data' => $data,
-            'villes' => $villes, 'checkBox' => null
+            'villes' => $villes,
+            'data' => $data, 'checkBox' => null,
+            'statutStat' => $statutStat
+
         ]);
     }
 

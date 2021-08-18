@@ -191,6 +191,7 @@ function chart2() {
 
 }
 function chart3() {
+
     var options = {
         chart: {
             height: 350,

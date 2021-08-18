@@ -75,8 +75,8 @@ Route::post('/caisse', 'CaisseController@store')->name('caisse.store')->middlewa
 Route::post('/reclamation', 'ReclamationController@store')->name('reclamation.store')->middleware('can:fournisseur');
 Route::get('/reclamation', 'ReclamationController@index')->name('reclamation.index')->middleware('can:delete-commande');
 Route::delete('/reclamation', 'ReclamationController@destroy')->name('reclamation.destroy')->middleware('can:delete-commande');
-Route::get('/reclamation/{id}', 'ReclamationController@traiter')->name('reclamation.traiter')->middleware('can:manage-users');
-Route::get('/filter/reclamation', 'ReclamationController@filter')->name('reclamation.filter');
+Route::get('/reclamation/{id}', 'ReclamationController@traiter')->name('reclamation.traiter')->middleware('can:delete-commande');
+Route::get('/filter/reclamation', 'ReclamationController@filter')->name('reclamation.filter')->middleware('can:delete-commande');;
 
 
 

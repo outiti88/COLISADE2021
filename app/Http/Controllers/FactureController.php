@@ -10,6 +10,7 @@ use App\Produit;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +45,7 @@ class FactureController extends Controller
                 $q->whereIn('name', ['client', 'ecom']);
             })->whereHas('commandes', function ($q) {
                 $q->where('facturer', '0')->where('statut','Livré');
-            })->get();
+            })->orderBy('name')->get();
         } else {
             $factures = DB::table('factures')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC');
         }
@@ -81,7 +82,7 @@ class FactureController extends Controller
             $factures = DB::table('factures')->orderBy('created_at', 'DESC');
             $clients = User::whereHas('roles', function ($q) {
                 $q->whereIn('name', ['client', 'ecom']);
-            })->get();
+            })->orderBy('name')->get();
         } else {
             $factures = DB::table('factures')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC');
         }
@@ -173,7 +174,7 @@ class FactureController extends Controller
         ';
         foreach ($commandes as $index => $commande) {
 
-            if (($index >= $i * 8) && ($index < 8 * ($i + 1))) { //les infromations de la table depe,d de la page actuelle
+            if (($index >= $i * 6) && ($index < 6 * ($i + 1))) { //les infromations de la table depe,d de la page actuelle
                 $price = ($commande->statut == 'Livré')? $commande->prix : $commande->refusePart;
                 if ($commande->montant == 0) {
                     $montant = "Payée Par CB";
@@ -268,7 +269,7 @@ class FactureController extends Controller
         }
         $user = DB::table('users')->find($user);
         //dd($facture->id);
-        $pdf = \App::make('dompdf.wrapper');
+        $pdf = App::make('dompdf.wrapper');
 
         $style = '
         <!doctype html>
@@ -284,7 +285,7 @@ class FactureController extends Controller
 
                 body{
                     margin: 0px;
-                    background-image: url("https://i.postimg.cc/mgg5vzM2/Facture-PNG.png");
+                    background-image: url("https://colisade.ma/images/FactureColisade.png");
                     width: 790px;
                     height: auto;
                     background-position: center;
@@ -343,7 +344,7 @@ class FactureController extends Controller
             </head>
             <body>
         ';
-        $m = (($facture->livre) / 8);
+        $m = (($facture->livre) / 6);
         $n = (int)$m; // nombre de page
         if ($n != $m) {
             $n++;
@@ -421,15 +422,57 @@ class FactureController extends Controller
                 $users[] =  User::withTrashed()->find($commande->user_id);
         }
         //$commandes = Commande::all()->paginate(3) ;
+        $statuts = [];
+        $statutStat = [];
+
+        if(!Gate::denies('manage-users')){
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('deleted_at', NULL)
+                ->where(function ($q) {
+                   $q->whereDate('updated_at', '>=', now()->subMonth())
+                       ->orWhereNotIn('commandes.statut', ['livré', 'Retour en stock', 'Retour']);
+               })
+                ->groupBy('statut')
+                ->get();
+        }
+        else if(!Gate::denies('livreur')){
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('deleted_at', NULL)
+                ->where('livreur', Auth::user()->id)
+                ->whereNotIn('commandes.statut', ['envoyée', 'Ramassée', 'Recue'])
+                ->groupBy('statut')
+                ->get();
+        }else{
+            $statuts = DB::table('commandes')
+                ->select('statut', DB::raw('count(*) as total'))
+                ->where('user_id', Auth::user()->id)
+                ->where('deleted_at', NULL)
+                ->where(function ($q) {
+                   $q->whereDate('updated_at', '>=', now()->subMonth())
+                       ->orWhereNotIn('commandes.statut', ['livré', 'Retour en stock', 'Retour']);
+               })
+                ->groupBy('statut')
+                ->get();
+        }
+
+        foreach ($statuts as $statut){
+            $statutStat[$statut->statut] = $statut->total;
+        }
+
         return view('commande.colis', [
-            'nouveau' => $nouveau, 'commandes' => $commandes,
+            'commandes' => $commandes,
+            'nouveau' => $nouveau,
             'total' => $total,
             'users' => $users,
             'clients' => $clients,
-            'livreurs' => $livreurs,
             'produits' => $produits,
-            'data' => $data,
-            'villes' => $villes, 'checkBox' => null
+            'livreurs' => $livreurs,
+            'villes' => $villes,
+            'data' => $data, 'checkBox' => null,
+            'statutStat' => $statutStat
+
         ]);
     }
 

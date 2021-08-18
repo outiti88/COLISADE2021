@@ -306,12 +306,6 @@
 
 @section('javascript')
 
-<script src="/otika/assets/bundles/datatables/datatables.min.js"></script>
-<script src="/otika/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="/otika/assets/bundles/jquery-ui/jquery-ui.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="/otika/assets/js/page/datatables.js"></script>
-
   <script>
     function productedit() {
   document.getElementById("fieldset_edit").disabled = !document.getElementById("fieldset_edit").disabled;

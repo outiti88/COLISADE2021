@@ -45,17 +45,15 @@
 
                         <input type="hidden" name="livreur" value="{{$livreur}}">
                   @endcan
-                    <div class="row" id="test">
-
-                        <div class="form-group col-md-12">
-                          <label class="col-sm-12">Mode de paiement :</label>
-                          <div class="col-md-12">
-                            <input  value="{{ old('banque') }}" name="banque" type="text" placeholder="Mode de paiement " class="form-control form-control-line" required>
-
+                        <div class="form-group">
+                            <label for="mode" class="col-sm-12">Mode de paiement :</label>
+                            <div class="col-sm-12">
+                                <select name="banque" id="mode" class="form-control form-control-line" required>
+                                    <option>Paiement CASH</option>
+                                    <option selected>Paiement par Virement</option>
+                                </select>
                             </div>
-                          </div>
-
-                    </div>
+                        </div>
                   <div class="form-group">
                     <label class="col-md-12">Montant envoyé :</label>
                     <div class="col-md-12">

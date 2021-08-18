@@ -158,14 +158,15 @@
         <div class="card">
             <div class="row d-flex justify-content-between px-3 top">
 
-                <div class="d-flex">
+                <div>
                     <h6>COMMANDE <span class="text-primary font-weight-bold">{{$commande->numero}}</span></h6>
+                    <h6>Store: <span class="text-primary font-weight-bold">{{$commande->user()->first()->name}}</span></h6>
                 </div>
                 <img src="{{asset('assets/images/logo-light-text.png')}}" style="
                 WIDTH: 20%;
             "class="light-logo" alt="homepage" />
                 <div class="d-flex flex-column text-sm-right">
-                    <p class="mb-0">Date <span>{{$commande->created_at}}</span></p>
+                    <p class="mb-0">Date d'envoie: <span>{{$commande->created_at}}</span></p>
                     <p>Client:  <span class="font-weight-bold">{{$commande->nom}}</span></p>
                 </div>
             </div> <!-- Add class 'active' to progress -->
@@ -198,39 +199,81 @@
                 </div>
             </div>
             <div class="row justify-content-between top">
-                <div class="row d-flex icon-content"> <i class="fas fa-box"></i>
-                    <div class="d-flex flex-column">
+                <div class="row d-flex flex-column icon-content">
+                    <div class="d-flex ">
+                        <i class="fas fa-box"></i>
                         <p class="font-weight-bold">Commande<br>Acceptée</p>
                     </div>
+                    <p class="font-weight-bold">{{$commande->created_at}}</p>
                 </div>
-                <div class="row d-flex icon-content"> <i class="fas fa-truck"></i>
-                    <div class="d-flex flex-column">
-                        <p class="font-weight-bold">Commande<br>Expédiée -RABAT-</p>
+                <div class="row d-flex flex-column icon-content" @if ($state < 2) style="opacity: 0.5" @endif >
+                    <div class="row d-flex">
+                        <i class="fas fa-truck"></i>
+                       <p class="font-weight-bold">Commande<br>Expédiée -RABAT-</p>
                     </div>
+
+                    @if ($state >= 2)
+                        @if ($state == 2)
+                            <p class="font-weight-bold">{{\App\Statut::where('commande_id',$commande->id)->where('name','Reçue')->first()->created_at}}</p>
+                        @else
+                            <p class="font-weight-bold">{{\App\Statut::where('commande_id',$commande->id)->where('name','Expidiée')->first()->created_at}}</p>
+                        @endif
+                    @endif
                 </div>
-                <div class="row d-flex icon-content"> <i class="fas fa-map-marked-alt"></i>
-                    <div class="d-flex flex-column">
+                <div class="row d-flex flex-column icon-content" @if ($state < 3) style="opacity: 0.5" @endif >
+                    <div class="d-flex">
+                        <i class="fas fa-map-marked-alt"></i>
                         <p class="font-weight-bold">Commande<br>En cours -{{$commande->ville}}-</p>
+
                     </div>
+                    @if ($state >= 3)
+                            <p class="font-weight-bold">{{\App\Statut::where('commande_id',$commande->id)->where('name','en cours')->first()->created_at}}</p>
+                        @endif
                 </div>
-                <div class="row d-flex icon-content">
+                <div class="row d-flex flex-column icon-content" @if ($state < 4) style="opacity: 0.5" @endif >
                     @if ($state<5)
-                        <i class="fas fa-clipboard-check"></i>
-                        <div class="d-flex flex-column">
+                        <div class="d-flex ">
+                            <i class="fas fa-clipboard-check"></i>
                             <p class="font-weight-bold">Commande<br>Livrée</p>
                         </div>
+                        @if ($state >= 4)
+                            <p class="font-weight-bold">{{\App\Statut::where('commande_id',$commande->id)->where('name',$commande->statut)->first()->created_at}}</p>
+                        @endif
                     @else
-                    <i class="fas fa-exclamation-triangle" style="color: red"></i>
-                    <div class="d-flex flex-column">
+
+                    <div class="d-flex ">
+                        <i class="fas fa-exclamation-triangle" style="color: red"></i>
                         <p style="color: red" class="font-weight-bold">Commande<br>{{$commande->statut}}</p>
                     </div>
+                    @if ($state >= 4)
+                            <p style="color: red" class="font-weight-bold">{{\App\Statut::where('commande_id',$commande->id)->where('name',$commande->statut)->first()->created_at}}</p>
+                        @endif
                     @endif
                 </div>
             </div>
+            <button onclick="goBack()" href="/tracking" type="button" class="btn  btn-block" style="background-color: #f16821; color: white;" >
+                <i class="fas fa-backward"></i> Retour
+            </button>
         </div>
 
-        <button onclick="goBack()" href="/tracking" type="button" class="btn  btn-block" style="background-color: #f16821; color: white;" >
-            <i class="fas fa-backward"></i>  Retour</button>
+        <div class="card" style="
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+    ">
+            <h6 class="text-primary font-weight-bold">Pour plus d'informations, Contactez-nous sur :
+                <a style="float: none;color: #f16821;font-weight: bold;padding: 0 20px;  font-size: 0.8em;" href="tel:+212649517070">
+                    <span class="icon-stack"><i class="fas fa-phone-alt"></i></span>06 49 51 70 70
+                </a>
+                <a style="float: none;color: #f16821;font-weight: bold; font-size: 0.8em;" href="tel:+212537793192">
+                    <span class="icon-stack">
+                    <i class="fas fa-tty"></i>
+                   </span>
+                            05 37 79 31 92 </a>
+            </h6>
+        </div>
+
+
 
     </div>
 

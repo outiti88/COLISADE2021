@@ -42,7 +42,7 @@ class ProduitController extends Controller
 
         $clients = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['ecom']);
-        })->get();
+        })->orderBy('name')->get();
         $users = [];
         $stock = [];
         if (!Gate::denies('ramassage-commande')) {
@@ -82,7 +82,7 @@ class ProduitController extends Controller
         $data = $request->all();
         $clients = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['ecom']);
-        })->get();
+        })->orderBy('name')->get();
         $produits = DB::table('produits')->orderBy('created_at', 'DESC');
         $users = [];
         $stock = [];

@@ -64,7 +64,7 @@
             color: #f7941e !important;
         }
         .page-item.active .page-link {
-            
+
             background-color: #f7941e !important;
             border-color: #f7941e !important;
             color: #fff !important;
@@ -92,7 +92,7 @@
             <div class="m-r-5" style="margin-right: 10px;">
                 <a  class="btn btn-warning text-white"  data-toggle="modal" data-target="#modalSearchForm"><i class="fa fa-search"></i></a>
             </div>
-    
+
         </div>
         </div>
     </div>
@@ -144,8 +144,8 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Attention !</strong>vous ne pouvez pas changer le statut La commande numero {{session()->get('noedit')}}
           </div>
-        @endif 
-      
+        @endif
+
         @if (session()->has('nonExpidie'))
         <div class="alert alert-dismissible alert-danger col-12">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -164,7 +164,7 @@
         <div class="alert alert-dismissible alert-danger col-12">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Attention !</strong>vous ne pouvez pas changer le statut de La commande numero {{session()->get('blNongenere')}} sans générer le bon de livraison <br>
-                
+
         </div>
         @endif
         <div class="col-12">
@@ -193,7 +193,7 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Statut</th>
                                 <th scope="col">Ticket</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody id="myTable">
@@ -201,13 +201,13 @@
                            <tr>
                             @can('edit-users')
                             <th scope="row">
-                                <a title="{{$users[$index]->name}}" class=" text-muted waves-effect waves-dark pro-pic 
+                                <a title="{{$users[$index]->name}}" class=" text-muted waves-effect waves-dark pro-pic
                                     @if($users[$index]->statut)
                                         vip
                                     @endif
-                                    
-                                    " 
-                                       
+
+                                    "
+
                                             @can('edit-users')
                                                 href="{{route('admin.users.edit',$users[$index]->id)}}"
                                             @endcan
@@ -218,26 +218,26 @@
                             </th>
                             @endcan
                             <th scope="row">
-                                
+
                                 @if ($commande->facturer != 0)
-                                
-                                    <a href="{{route('facture.infos',$commande->facturer)}}" style="color: white; background-color: #f7941e" 
-                                    class="badge badge-pill" > 
-                                    <span style="font-size: 1.25em">Facturée</span> 
+
+                                    <a href="{{route('facture.infos',$commande->facturer)}}" style="color: white; background-color: #f7941e"
+                                    class="badge badge-pill" >
+                                    <span style="font-size: 1.25em">Facturée</span>
                                     </a>
                                     <br>
                                 @else
                                     @if ($commande->traiter != 0)
-                                    
-                                    <a href="{{route('bon.infos',$commande->traiter)}}" style="color: white" 
-                                    class="badge badge-pill badge-dark"> 
-                                    <span style="font-size: 1.25em">Bon livraison</span> 
+
+                                    <a href="{{route('bon.infos',$commande->traiter)}}" style="color: white"
+                                    class="badge badge-pill badge-dark">
+                                    <span style="font-size: 1.25em">Bon livraison</span>
                                     </a>
                                     <br>
                                     @endif
                                 @endif
                                 {{$commande->numero}}
-                            
+
                             </th>
                             <td>{{$commande->nom}}</td>
                             <td>{{$commande->telephone}}</td>
@@ -252,16 +252,16 @@
                             @cannot('livreur')
                             <td>{{$commande->prix}} DH</td>
                             @endcannot
-                            <td>{{$commande->created_at}}</td>
+                            <td>{{$commande->updated_at}}</td>
                             <td>
-                                
-                                <a  style="color: white" 
-                                    class="badge badge-pill 
+
+                                <a  style="color: white"
+                                    class="badge badge-pill
                                     @switch($commande->statut)
                                     @case("envoyée")
                                     badge-warning"
                                     @can('ramassage-commande')
-                                    title="Rammaser la commande" 
+                                    title="Rammaser la commande"
                                      href="{{ route('commandeStatut',['id'=> $commande->id]) }}"
                                     @endcan
                                         @break
@@ -280,59 +280,59 @@
                                     @case("En cours")
                                     badge-info"
                                         @if ($commande->traiter > 0)
-                                        title="Voir le bon de livraison" 
+                                        title="Voir le bon de livraison"
                                         href="{{route('bon.gen',$commande->traiter)}}"
                                         target="_blank"
                                         @else
-                                        title="Générer le bon de livraison" 
+                                        title="Générer le bon de livraison"
                                         href="{{route('bonlivraison.index')}}"
                                         @endif
-                                        
+
                                         @break
                                     @case("Ramassée")
                                     badge-secondary"
                                         @can('ramassage-commande')
-                                        title="Recevoir la commande" 
+                                        title="Recevoir la commande"
                                          href="{{ route('commandeStatut',['id'=> $commande->id]) }}"
                                         @endcan
                                     @break
                                     @case("Reçue")
                                     badge-dark"
                                     @can('ramassage-commande')
-                                    title="Envoyer la commande" 
+                                    title="Envoyer la commande"
                                      href="{{ route('commandeStatut',['id'=> $commande->id]) }}"
                                     @endcan
                                 @break
                                     @case("Expidiée")
                                         badge-primary"
                                         @can('ramassage-commande')
-                                        title="Valider la commande" 
+                                        title="Valider la commande"
                                          href="{{ route('commandeStatut',['id'=> $commande->id]) }}"
                                         @endcan
                                     @break
                                     @case("Livré")
                                     badge-success"
                                     @if ($commande->facturer > 0)
-                                        title="Voir la facture" 
+                                        title="Voir la facture"
                                         href="{{route('facture.gen',$commande->facturer)}}"
                                         target="_blank"
                                         @else
-                                        title="Générer la facture" 
+                                        title="Générer la facture"
                                         href="{{route('facture.index')}}"
                                         @endif
                                         @break
                                     @default
                                     badge-danger"
                                 @endswitch
-                                    
-                                     > 
-                                     <span style="font-size: 1.25em">{{$commande->statut}}</span> 
+
+                                     >
+                                     <span style="font-size: 1.25em">{{$commande->statut}}</span>
                                 </a>
-                                <br> 
+                                <br>
                                 @if ($commande->statut == "Reporté" || $commande->statut == "Relancée")
                                     Pour le: <br>{{$commande->postponed_at}}
                                 @else
-                                ({{\Carbon\Carbon::parse($commande->updated_at)->diffForHumans()}}) 
+                                ({{\Carbon\Carbon::parse($commande->updated_at)->diffForHumans()}})
 
                                 @endif
                             </td>
@@ -342,11 +342,11 @@
                         <tr>
                             <td colspan="10" style="text-align: center">Aucune commande enregistrée!</td>
                         </tr>
-                        
+
                            @endforelse
-                         
+
                         </tbody>
-                        
+
                     </table>
                     <div class="row">
                         <div class="col-12 d-flex justify-content-center">
@@ -361,7 +361,7 @@
 </div>
 
 
-<div class="container my-4">    
+<div class="container my-4">
     <div class="modal fade" id="modalSearchForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -386,12 +386,12 @@
                                             {{$client->name}}
                                         </option>
                                             @endforeach
-                                           
+
                                         </select>
-                                        
+
                                     </div>
                                 </div>
-                               
+
 
                                 <div class="form-group row">
                                     <label for="livreur" class="col-sm-4">Livreur :</label>
@@ -403,13 +403,13 @@
                                             {{$livreur->name}}
                                         </option>
                                             @endforeach
-                                           
+
                                         </select>
-                                        
+
                                     </div>
                                 </div>
                                 @endcan
-                                
+
                                 <div class="form-group row">
                                     <label class="col-md-4">Nom et Prénom:</label>
                                     <div class="col-md-8">
@@ -445,7 +445,7 @@
                                     </div>
                                   </div>
                                   @cannot('livreur')
-                                      
+
                                   <div class="form-group row">
                                     <label class="col-sm-4">Ville :</label>
                                     <div class="col-sm-8">
@@ -481,16 +481,16 @@
                                         <input class="form-control" name="facturer" type="checkbox" value="1" id="facture">
                                       </div>
                                   </div>
-                                
+
                                 <div class="form-group">
                                     <div class="modal-footer d-flex justify-content-center">
                                         <button type="submit" class="btn btn-warning"><i class="fa fa-search"></i> Rechercher</button>
-                                        
+
                                     </div>
                                 </div>
                             </form>
                         </div>
-            
+
                       </div>
                     </div>
     </div>
