@@ -324,6 +324,9 @@ class CommandeController extends Controller
         if ($request->filled('nom')) {
             $commandes->where('nom', 'like', '%' . $request->nom . '%');
         }
+        if ($request->filled('numero')) {
+            $commandes->where('numero', 'like', '%' . $request->numero . '%');
+        }
         if ($request->filled('telephone')) {
             $commandes->where('telephone', 'like', '%' . $request->telephone . '%');
         }
@@ -342,7 +345,7 @@ class CommandeController extends Controller
         }
 
         if ($request->filled('bl')) {
-            $commandes->where('traiter', '<>', 0)->where('facturer', 0);
+            $commandes->where('facturer', 0);
         }
 
         if ($request->filled('facturer')) {

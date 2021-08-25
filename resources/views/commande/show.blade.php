@@ -139,7 +139,7 @@ N: {{$commande->numero}}
         <div class="col-6">
             <div class="row float-right">
                 @can('fournisseur')
-                <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalReclamation"><i class="fab fa-buffer"></i> <span class="quick-action">Réclamer</span></a>
+                <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalReclamation"><i class="fab fa-buffer"></i> <span class="quick-action">Réclamer </span></a>
                 <div class="modal fade" id="modalReclamation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -190,19 +190,17 @@ N: {{$commande->numero}}
                   </div>
                 @endcan
 
-                    @can('client')
-                    <a  class="btn btn-danger text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionForm"><i class="fa fa-plus-square"></i></a>
-                    @endcan
+
                     @can('livreur')
                     @if (( $commande->statut === "Pas de Réponse" || $commande->statut === "Livré" || $commande->statut === "Injoignable" || $commande->statut === "En cours" || $commande->statut === "Refusée" || $commande->statut === "Modifiée" || $commande->statut === "Annulée" || $commande->statut === "Relancée" || $commande->statut === "Reporté" ))
-                    <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormStatut"><span class="quick-action">Statut</span><i class="fas fa-edit"></i></a>
+                    <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormStatut"><i class="fas fa-edit"></i><span class="quick-action">Statut </span></a>
                     @endif
                     @endcan
                     @can('manage-users')
                         @if ( $commande->statut !== "Retour en stock")
-                        <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormStatut"><span class="quick-action">Statut</span><i class="fas fa-edit"></i></a>
+                        <a  class="btn btn-warning text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormStatut"><i class="fas fa-edit"></i><span class="quick-action">Statut</span></a>
                         @endif
-                        <a  class="btn btn-dark text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormLivreur"><span class="quick-action">Affecter</span><i class="fas fa-user"></i></a>
+                        <a  class="btn btn-dark text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormLivreur"><i class="fas fa-user"></i> <span class="quick-action"> Affecter</span></a>
 
                         <div class="modal fade" id="modalSubscriptionFormLivreur" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -260,46 +258,47 @@ N: {{$commande->numero}}
 
                     @can('delete-commande')
                     @if ($commande->statut === "envoyée" || $modify === 1  )
-                    <a  class="btn btn-primary text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormEdit"><span class="quick-action">Modifier</span><i class="fas fa-edit"></i></a>
-
-                    <a class="btn btn-secondary text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormDelete"><span class="quick-action">Supprimer</span><i class="fas fa-trash-alt"></i></a>
-
-                                <div class="modal fade" id="modalSubscriptionFormDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Êtes-vous sûr de vouloir supprimer cette commande ?</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>
-                                                Commande numero: {{$commande->numero}}
-                                            </h5>
-                                            <p class="proile-rating">Date : {{date_format($commande->created_at,"Y/m/d")}}<span> {{date_format($commande->created_at,"H:i:s")}}</span></p>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                Cliquez sur <b>Ok</b> pour confirmer ou <b>fermer</b> pour annuler la suppression
-
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
+                    <a  class="btn btn-primary text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormEdit"><i class="fas fa-edit"></i><span class="quick-action"> Modifier</span></a>
+                        @if ($commande->statut === "envoyée" )
+                        <a class="btn btn-secondary text-white m-r-5" data-toggle="modal" data-target="#modalSubscriptionFormDelete"><i class="fas fa-trash-alt"></i><span class="quick-action"> Supprimer</span></a>
+    
+                                    <div class="modal fade" id="modalSubscriptionFormDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">Êtes-vous sûr de vouloir supprimer cette commande ?</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    Commande numero: {{$commande->numero}}
+                                                </h5>
+                                                <p class="proile-rating">Date : {{date_format($commande->created_at,"Y/m/d")}}<span> {{date_format($commande->created_at,"H:i:s")}}</span></p>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                    Cliquez sur <b>Ok</b> pour confirmer ou <b>fermer</b> pour annuler la suppression
+    
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
                                               </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                              <form method="POST" action="{{ route('commandes.destroy',['commande'=> $commande->id]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-primary text-white m-r-5">Ok</button>
+                                            </form>
+                                            </div>
                                           </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                          <form method="POST" action="{{ route('commandes.destroy',['commande'=> $commande->id]) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-primary text-white m-r-5">Ok</button>
-                                        </form>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div>
-
+    
+                        @endif
                     @endif
 
                     @endcan
@@ -337,7 +336,7 @@ N: {{$commande->numero}}
         @if (session()->has('noedit'))
         <div class="alert alert-dismissible alert-danger col-12">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Attention !</strong>vous ne pouvez pas changer le statut de La commande numero {{session()->get('noedit')}}
+        <strong>Attention !</strong> Vous ne pouvez pas changer le statut de La commande numero {{session()->get('noedit')}}
           </div>
         @endif
         @if (session()->has('nodelete'))
